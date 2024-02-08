@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Role")
+@Entity
 public class Role {
     @JsonProperty("Id")
     private int Id;

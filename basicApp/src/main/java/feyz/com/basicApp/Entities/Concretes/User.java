@@ -11,6 +11,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "User")
+@Entity
 public class User {
     @JsonProperty("Id")
     private int Id;
