@@ -1,8 +1,7 @@
 package feyz.com.basicApp.Entities.Concretes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Role")
+@Table(name = "Roles")
 @Entity
 public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("Id")
+    @Column(name = "Id")
     private int Id;
+
     @JsonProperty("Name")
+    @Column(name = "Name")
     private String Name;
 }

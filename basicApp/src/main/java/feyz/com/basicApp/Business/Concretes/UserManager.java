@@ -16,14 +16,14 @@ private UserRepository userRepository;
 
     @Override
     public List<User> GetAll() {
-        return userRepository.getAll();
+        return userRepository.findAll();
     }
     @Override
     public User Add(User user) {
-        return userRepository.Add(user);
+        return userRepository.save(user);
     }
     @Override
     public User Update(User user) {
-        return userRepository.Update(user);
+        return userRepository.save(user);
     }
 }

@@ -16,6 +16,6 @@ public class RoleManager implements RoleService {
 
     @Override
     public List<Role> GetAll() {
-        return roleRepository.getAll();
+        return roleRepository.findAll();
     }
 }
