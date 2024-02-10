@@ -4,6 +4,7 @@ import feyz.com.basicApp.Business.Abstracts.RoleService;
 import feyz.com.basicApp.Entities.Concretes.Role;
 import feyz.com.basicApp.Entities.Concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class RolesController {
         this.roleService = roleService;
     }
     @GetMapping("/getall")
-    public List<Role> getAll(){
-        return roleService.GetAll();
+    public ResponseEntity<List<Role>> getAll(){
+        return ResponseEntity.ok().body( roleService.GetAll());
     }
 
     @PostMapping("/add")

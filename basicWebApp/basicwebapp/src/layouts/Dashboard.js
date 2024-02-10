@@ -6,9 +6,11 @@ import Login from '../pages/Login';
 import SideNavi from './SideNavi';
 import { Grid, GridRow, GridColumn } from 'semantic-ui-react'
 import { Route, Routes } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 export default function Dashboard() {
   return (
     <div>
+      <ToastContainer position="bottom-right" />
       <Grid>
         <GridRow>
           <GridColumn width={3}>
