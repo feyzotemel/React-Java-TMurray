@@ -19,6 +19,15 @@ public class UsersController {
         public List<User> GetAll(){
             return  userService.GetAll();
         }
+    @GetMapping("/getById")
+    public User getById(@RequestParam("id") int id){
+        return  userService.GetById(id);
+    }
+    @GetMapping("/deleteById")
+    public boolean deleteById(@RequestParam("id") int id){
+        userService.DeleteById(id);
+        return true ;
+    }
 
     @PostMapping("/add")
     public User Add(@RequestBody User user) {

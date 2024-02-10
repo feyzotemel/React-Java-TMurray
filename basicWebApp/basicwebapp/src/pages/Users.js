@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  TableRow,
-  TableHeaderCell,
-  TableHeader,
-  TableFooter,
-  TableCell,
-  TableBody,
-  MenuItem,
-  Icon,
-  Menu,
-  Table,
-} from 'semantic-ui-react';
+import { TableRow,TableHeaderCell,TableHeader,TableFooter,TableCell,TableBody,MenuItem,Icon,Menu,Table,Button} from 'semantic-ui-react';
+import { NavLink} from "react-router-dom"
 import UserService from '../services/userService';
 import RoleService from '../services/roleService';
 export default function Users() {
@@ -47,15 +37,18 @@ export default function Users() {
 
         <TableBody>
           {
-            users.map(product => (
-              <TableRow key={product.Id}> 
-                <TableCell>{product.Id}</TableCell>
-                <TableCell>{product.Id}</TableCell>
-                <TableCell>{product.Full_Name}</TableCell>
-                <TableCell>{product.Email}</TableCell>
-                <TableCell>{product.Date_Birthday}</TableCell>
-                <TableCell>{product.Date_Registered}</TableCell>
-                <TableCell>{ roles.filter(x=> x.Id === product.RoleId)[0].Name}</TableCell>
+            users.map(user => (
+              <TableRow key={user.Id}> 
+                <TableCell> 
+                  <Button basic primary size='small' icon='pencil' as={NavLink} to={`/user/${user.Id}`}></Button>
+                  <Button basic color='red' size='small' icon='trash' as={NavLink} to={`/deleteuser/${user.Id}`}></Button>
+                </TableCell>
+                <TableCell>{user.Id}</TableCell>
+                <TableCell>{user.Full_Name}</TableCell>
+                <TableCell>{user.Email}</TableCell>
+                <TableCell>{user.Date_Birthday}</TableCell>
+                <TableCell>{user.Date_Registered}</TableCell>
+                <TableCell>{ roles.filter(x=> x.Id === user.RoleId)[0].Name}</TableCell>
               </TableRow>
             ))
           }
