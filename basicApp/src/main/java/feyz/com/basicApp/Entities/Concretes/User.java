@@ -1,18 +1,27 @@
 package feyz.com.basicApp.Entities.Concretes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import feyz.com.basicApp.Enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Users")
 @Entity
-public class User {
+@Builder
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("Id")
@@ -37,5 +46,45 @@ public class User {
 
     @JsonProperty("RoleId")
     @Column(name = "RoleId")
-    private int RoleId;
+    private Integer RoleId;
+
+    @JsonProperty("UsrPassword")
+    @Column(name = "UsrPassword")
+    private String UsrPassword;
+
+    //UserDetails implementations
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(RoleEnum.getRoleName(RoleId)));
+    }
+
+    @Override
+    public String getPassword() {
+        return UsrPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
