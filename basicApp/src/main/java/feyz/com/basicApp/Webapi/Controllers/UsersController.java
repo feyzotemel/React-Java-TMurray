@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @CrossOrigin
 public class UsersController {
     private UserService userService;
@@ -21,11 +21,11 @@ public class UsersController {
             return  ResponseEntity.ok().body(userService.GetAll());
         }
     @GetMapping("/getById")
-    public User getById(@RequestParam("id") int id){
+    public User getById(@RequestParam("id") Long id){
         return  userService.GetById(id);
     }
     @GetMapping("/deleteById")
-    public boolean deleteById(@RequestParam("id") int id){
+    public boolean deleteById(@RequestParam("id") Long id){
         userService.DeleteById(id);
         return true ;
     }

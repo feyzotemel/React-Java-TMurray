@@ -18,7 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("Id")
     @Column(name = "Id")
-    private int Id;
+    private Long Id;
 
     @JsonProperty("Name")
     @Column(name = "Name")

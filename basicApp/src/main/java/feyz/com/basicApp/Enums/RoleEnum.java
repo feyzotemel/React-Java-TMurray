@@ -1,16 +1,16 @@
 package feyz.com.basicApp.Enums;
 
 public enum RoleEnum {
-    ROLE_ADMIN((Integer) 1),
-    ROLE_ORDINARY((Integer) 2);
+    ROLE_ADMIN((Long) 1L),
+    ROLE_ORDINARY((Long) 2L);
 
-    private Integer numVal;
+    private Long numVal;
 
-    RoleEnum(Integer numVal) {
+    RoleEnum(Long numVal) {
         this.numVal = numVal;
     }
 
-    public static String getRoleName(Integer numVal) {
+    public static String getRoleName(Long numVal) {
         for (RoleEnum role : RoleEnum.values()) {
             if (role.numVal.equals(numVal)) {
                 return role.name();
@@ -19,7 +19,7 @@ public enum RoleEnum {
         return null;
     }
 
-    public Integer getNumVal() {
+    public Long getNumVal() {
         return numVal;
     }
 }

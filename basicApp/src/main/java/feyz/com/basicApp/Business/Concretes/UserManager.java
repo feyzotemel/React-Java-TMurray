@@ -5,7 +5,6 @@ import feyz.com.basicApp.Data.Abstracts.UserRepository;
 import feyz.com.basicApp.Entities.Concretes.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +27,13 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public User GetById(int id) {
+    public User GetById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElse(null);
     }
 
     @Override
-    public void DeleteById(int id) {
+    public void DeleteById(Long id) {
         userRepository.deleteById(id);
     }
 

@@ -26,11 +26,11 @@ public class BasicAppApplication {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
-            roleService.Add(new Role(1, "ROLE_ADMIN"));
-            roleService.Add(new Role(2, "ROLE_ORDINARY"));
+            roleService.Add(new Role(1L, "ROLE_ADMIN"));
+            roleService.Add(new Role(2L, "ROLE_ORDINARY"));
 
-            userService.Add(new User(1, "feyzullah.temel@hotmail.com", dateFormat.parse("1991-01-13"), "Feyzullah Temel", new Date(), RoleEnum.ROLE_ADMIN.getNumVal(),"123456"));
-            userService.Add(new User(2, "test@hotmail.com", dateFormat.parse("1998-02-10"), "Test Name", new Date(), RoleEnum.ROLE_ORDINARY.getNumVal(),"123456"));
+            userService.Add(new User(1L, "feyzullah.temel@hotmail.com", dateFormat.parse("1991-01-13"), "Feyzullah Temel", new Date(), RoleEnum.ROLE_ADMIN.getNumVal(),"123456"));
+            userService.Add(new User(2L, "test@hotmail.com", dateFormat.parse("1998-02-10"), "Test Name", new Date(), RoleEnum.ROLE_ORDINARY.getNumVal(),"123456"));
         };
     }
 }
