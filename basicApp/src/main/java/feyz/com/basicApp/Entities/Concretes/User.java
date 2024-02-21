@@ -1,84 +1,41 @@
 package feyz.com.basicApp.Entities.Concretes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "Users")
 @Entity
+@Table(name = "users")
 @Builder
-public class User {
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("Id")
-    @Column(name = "Id")
-    private Long Id;
+    private Long id;
+    private String fullName;
+    private String email;
+    private String username;
+    private String password;
+    private Date dateBirthday;
+    private Date dateRegistered;
 
-    @JsonProperty("Email")
-    @Column(name = "Email")
-    private String Email;
+    private boolean accountNonExpired;
+    private boolean isEnabled;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
 
-    @JsonProperty("Date_Birthday")
-    @Column(name = "Date_Birthday")
-    private Date Date_Birthday;
-
-    @JsonProperty("Full_Name")
-    @Column(name = "Full_Name")
-    private String Full_Name;
-
-    @JsonProperty("Date_Registered")
-    @Column(name = "Date_Registered")
-    private Date Date_Registered;
-
-    @JsonProperty("RoleId")
-    @Column(name = "RoleId")
-    private Long RoleId;
-
-    @JsonProperty("UsrPassword")
-    @Column(name = "UsrPassword")
-    private String UsrPassword;
-
-    //UserDetails implementations
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(RoleEnum.getRoleName(RoleId)));
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return UsrPassword;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return getEmail();
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> authorities;
 }

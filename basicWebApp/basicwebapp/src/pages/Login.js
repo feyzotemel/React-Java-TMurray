@@ -12,12 +12,12 @@ export default function Login() {
                         <GridColumn width={4}>
                             <Form size='small'>
                                 <FormField>
-                                    <label>First Name</label>
-                                    <input placeholder='First Name' />
+                                    <label>User Name</label>
+                                    <input placeholder='User Name' />
                                 </FormField>
                                 <FormField>
-                                    <label>Last Name</label>
-                                    <input placeholder='Last Name' />
+                                    <label>Password</label>
+                                    <input placeholder='Password' type="password" />
                                 </FormField>
                                 <FormField>
                                     <Checkbox label='I agree to the Terms and Conditions' />
