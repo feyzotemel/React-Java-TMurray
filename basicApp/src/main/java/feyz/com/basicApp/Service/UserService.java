@@ -2,9 +2,12 @@ package feyz.com.basicApp.Service;
 
 
 import feyz.com.basicApp.Data.Abstracts.UserRepository;
+import feyz.com.basicApp.Entities.Concretes.Role;
 import feyz.com.basicApp.Entities.Concretes.User;
 import feyz.com.basicApp.Views.CreateUserRequest;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,13 +36,6 @@ public class UserService implements UserDetailsService {
         return user.orElseThrow(EntityNotFoundException::new);
     }
 
-    public Optional<User> getByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     public User createUser(CreateUserRequest request) {
 
         User newUser = User.builder()
@@ -58,5 +54,33 @@ public class UserService implements UserDetailsService {
         return userRepository.save(newUser);
     }
 
+    public Optional<User> getByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public List<User> GetAll() {
+        return userRepository.findAll();
+    }
+
+    public User GetById(Long id) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            var loginUsername = authentication.getName();
+            var currentUser = userRepository.findByUsername(loginUsername);
+            var curentUserRoles = currentUser.get().getAuthorities();
+            if ((currentUser.get().getId() == id &&
+                    curentUserRoles.stream().anyMatch(x -> x.getValue() == Role.ROLE_USER.getValue())) ||
+                    (curentUserRoles.stream().anyMatch(x -> x.getValue() == Role.ROLE_ADMIN.getValue()))) {
+                Optional<User> userOptional = userRepository.findById(id);
+                return userOptional.orElse(null);
+            }
+        }
+        return null;
+    }
+
+    public void DeleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 
 }

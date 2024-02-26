@@ -11,8 +11,8 @@ export default function Navi() {
   
   function handleSignOut() {
     console.log("handleSignOut")
-    setisAuthenticated(false);
-    navigate('/');
+    localStorage.setItem("isAuthenticated", false)
+    navigate('/login');
 
   };
   function handleSignIn() {
@@ -25,7 +25,7 @@ export default function Navi() {
         <Container>
           <MenuItem name='home'  as={NavLink} to="/" />
           <MenuMenu position='right'>
-            <MenuItem> {isAuthenticated ? <SignedIn signOut={handleSignOut} /> : 
+            <MenuItem> {localStorage.getItem("isAuthenticated") === "true" ? <SignedIn signOut={handleSignOut} /> : 
                                           <SignedOut signIn={handleSignIn} />} 
             </MenuItem>
           </MenuMenu>

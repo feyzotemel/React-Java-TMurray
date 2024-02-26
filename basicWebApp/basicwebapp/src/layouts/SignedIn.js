@@ -7,7 +7,7 @@ export default function SignedIn({signOut}) {
     return (
         <div>
                 <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' avatar spaced="right"/>
-                <Dropdown pointing="top left" text='UserName'>
+                <Dropdown pointing="top left" text={localStorage.getItem("authUsername")}>
                     <DropdownMenu>
                         <DropdownItem as={NavLink} to="/myprofile" text="My Profile" icon="user" />
                         <DropdownItem onClick={signOut} text="Logout" icon="sign-out" />

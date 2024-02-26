@@ -11,13 +11,10 @@ export default function SideNavi() {
 
                 />
                 <MenuItem
-                    name='messages'
+                    name='My Profile' as={NavLink} to="/myprofile"
 
                 />
-                <MenuItem
-                    name='friends'
-
-                />
+               
             </Menu>
         </div>
     )

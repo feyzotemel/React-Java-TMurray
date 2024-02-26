@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { TableRow,TableHeaderCell,TableHeader,TableFooter,TableCell,TableBody,MenuItem,Icon,Menu,Table,Button} from 'semantic-ui-react';
-import { NavLink} from "react-router-dom"
+import { TableRow, TableHeaderCell, TableHeader, TableFooter, TableCell, TableBody, MenuItem, Icon, Menu, Table, Button } from 'semantic-ui-react';
+import { NavLink } from "react-router-dom"
 import UserService from '../services/userService';
-import RoleService from '../services/roleService';
+import { useNavigate } from "react-router-dom";
+
 export default function Users() {
 
   const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
-
+  const navigate = useNavigate();
+  let isAuthenticated = localStorage.getItem("isAuthenticated");
+let authData  = JSON.parse(localStorage.getItem("authData"));
   useEffect(() => {
     let userService = new UserService();
-    let roleService = new RoleService();
-    roleService.getRoles().then(
-      result => setRoles(result.data)
-    )
-    userService.getUsers().then(
-      result => setUsers(result.data)
-    )
-  },[]);
+
+    if (isAuthenticated !== "true") {
+      navigate('/login');
+    } else {
+      console.log("usersauthData",authData)
+
+      let getLoginAuthority = authData.authorities[0]
+
+      if (getLoginAuthority === "ROLE_ADMIN") {
+        userService.getUsers().then(
+          result => setUsers(result.data)
+        )
+      }
+      else {
+        navigate('/myprofile');
+      }
+    }
+
+
+  }, []);
 
   return (
     <div>
@@ -38,17 +52,17 @@ export default function Users() {
         <TableBody>
           {
             users.map(user => (
-              <TableRow key={user.Id}> 
-                <TableCell> 
-                  <Button basic primary size='small' icon='pencil' as={NavLink} to={`/user/${user.Id}`}></Button>
-                  <Button basic color='red' size='small' icon='trash' as={NavLink} to={`/deleteuser/${user.Id}`}></Button>
+              <TableRow key={user.id}>
+                <TableCell>
+                  <Button basic primary size='small' icon='pencil' as={NavLink} to={`/user/${user.id}`}></Button>
+                  <Button basic color='red' size='small' icon='trash' as={NavLink} to={`/user/${user.id}`}></Button>
                 </TableCell>
-                <TableCell>{user.Id}</TableCell>
-                <TableCell>{user.Full_Name}</TableCell>
-                <TableCell>{user.Email}</TableCell>
-                <TableCell>{user.Date_Birthday}</TableCell>
-                <TableCell>{user.Date_Registered}</TableCell>
-                <TableCell>{ roles.filter(x=> x.Id === user.RoleId)[0].Name}</TableCell>
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.fullName}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.dateBirthday}</TableCell>
+                <TableCell>{user.dateRegistered}</TableCell>
+                <TableCell>{user.authorities + ""}</TableCell>
               </TableRow>
             ))
           }

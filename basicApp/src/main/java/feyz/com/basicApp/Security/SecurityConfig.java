@@ -39,11 +39,19 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x ->
-                        x.requestMatchers("/auth/getAllUsers","/auth/welcome/**", "/auth/addNewUser/**", "/auth/generateToken/**").permitAll()
+                        x.requestMatchers(
+                                "/api/auth/register/**",
+                                "/api/auth/login/**"
+                                ).permitAll()
                 )
                 .authorizeHttpRequests(x ->
-                        x.requestMatchers("/auth/user").authenticated()
-                                .requestMatchers("/auth/admin").hasRole("ADMIN")
+                        x.requestMatchers(
+                                "/api/users/getById",
+                                        "/api/users/getall"
+                                ).authenticated()
+                                .requestMatchers(
+                                        "/api/users/admin"
+                                ).hasRole("ADMIN")
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

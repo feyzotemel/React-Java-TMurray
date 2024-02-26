@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router'
 import UserService from '../services/userService';
-import RoleService from '../services/roleService';
 import {
     Button,
     Card,
@@ -16,16 +15,11 @@ export default function UserEdit() {
     let { id } = useParams()
 
     const [user, setUser] = useState({});
-    const [roles, setRoles] = useState([]);
     let userService = new UserService();
-    let roleService = new RoleService();
     const navigate = useNavigate();
 
     useEffect(() => {
-
-        roleService.getRoles().then(
-            result => setRoles(result.data)
-        )
+       
         userService.getUserById(id).then(
             result => setUser(result.data)
         )
@@ -40,7 +34,7 @@ export default function UserEdit() {
             console.log("isDeleted",isDeleted);
             if (isDeleted) {
                 toast.success("User Successfully Deleted!");
-                navigate('/');
+                navigate('/users');
 
             } else {
                 toast.error("User failed to Delete!");
@@ -61,8 +55,8 @@ export default function UserEdit() {
                             size='mini'
                             src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'
                         />
-                        <Card.Header>{user.Full_Name}</Card.Header>
-                        <Card.Meta>{user.Email}</Card.Meta>
+                        <Card.Header>{user.fullName}</Card.Header>
+                        <Card.Meta>{user.email}</Card.Meta>
                         <Card.Description>
                             Steve wants to add you to the group <strong>best friends</strong>
                         </Card.Description>
